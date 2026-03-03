@@ -6,8 +6,8 @@ library(ggridges)
 library(lubridate)
 
 # Load the dataset (Change the directory)
-df1 <- read_csv("~/Documents/Ecology /USDA Grant/Pheno Files/ALL tree database - Tree_Master_Updated Earthdance_COLA_Carondelet.csv")
-df2 <- read_csv("~/Documents/Ecology /USDA Grant/Pheno Files/Insect pollinator data - Pollen Count_Pollinator Data.csv")
+df1 <- read_csv("Tree_Master_Updated Earthdance_COLA_Carondelet.csv")
+df2 <- read_csv("Insect pollinator data - Pollen Count_Pollinator Data.csv")
 
 # Rename columns for consistency
 df1 <- df1 %>% rename(TreeNumber = Tree)
