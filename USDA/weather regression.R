@@ -7,17 +7,17 @@ library(broom)
 library(ggplot2)
 
 # Load all csv's
-weather_2022 <- read.csv("~/Documents/Ecology /USDA Grant/weather data/Weather Regression/Abiotic Data all years .xlsx - 2022.csv")%>%
+weather_2022 <- read.csv("Abiotic Data all years .xlsx - 2022.csv")%>%
   select(-1) # Not considering the first row/column since its all NA
-weather_2023 <- read.csv("~/Documents/Ecology /USDA Grant/weather data/Weather Regression/Abiotic Data all years .xlsx - 2023.csv")%>%
+weather_2023 <- read.csv("Abiotic Data all years .xlsx - 2023.csv")%>%
   select(-1)
-weather_2024 <- read.csv("~/Documents/Ecology /USDA Grant/weather data/Weather Regression/Abiotic Data all years .xlsx - 2024.csv")%>%
+weather_2024 <- read.csv("Abiotic Data all years .xlsx - 2024.csv")%>%
   select(-1)
-weather_file <- read.csv("~/Documents/Ecology /USDA Grant/weather data/Weather Regression/Weather Data - Sheet1.csv")
-weatherdb_2022 <- read.csv("~/Documents/Ecology /USDA Grant/weather data/Weather Regression/Weather Database - 2022.csv")
-weatherdb_2023 <- read.csv("~/Documents/Ecology /USDA Grant/weather data/Weather Regression/Weather Database - 2023.csv")
-weatherdb_2024 <- read.csv("~/Documents/Ecology /USDA Grant/weather data/Weather Regression/Weather Database - 2024.csv")
-weatherdb_2025 <- read.csv("~/Documents/Ecology /USDA Grant/weather data/Weather Regression/Weather Database - 2025.csv")
+weather_file <- read.csv("Weather Data - Sheet1.csv")
+weatherdb_2022 <- read.csv("Weather Database - 2022.csv")
+weatherdb_2023 <- read.csv("Weather Database - 2023.csv")
+weatherdb_2024 <- read.csv("Weather Database - 2024.csv")
+weatherdb_2025 <- read.csv("Weather Database - 2025.csv")
   
 # Convert Date column to uniform DD-MM-YYYY format for weather_file and selecting required column
 weather_file <- weather_file %>%
