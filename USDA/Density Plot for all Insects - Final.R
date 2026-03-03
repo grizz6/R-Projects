@@ -6,8 +6,8 @@ library(purrr)
 library(lubridate)
 
 # Load the dataset (Change the directory)
-df1 <- read.csv("~/Documents/Ecology /USDA Grant/Density plot for pheno and insect/ALL tree database - Tree_Master_Updated Earthdance_COLA_Carondelet.csv")
-df2 <- read.csv("~/Documents/Ecology /USDA Grant/Density plot for pheno and insect/Insect pollinator data - Pollen Count_Pollinator Data.csv")
+df1 <- read.csv("ALL tree database - Tree_Master_Updated Earthdance_COLA_Carondelet.csv")
+df2 <- read.csv("Insect pollinator data - Pollen Count_Pollinator Data.csv")
 
 # Rename columns for consistency
 df1 <- df1 %>% rename(TreeNumber = Tree)
