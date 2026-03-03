@@ -6,8 +6,8 @@ library(ggridges)
 library(purrr)
 
 # Load the dataset (Change the directory)
-df1 <- read.csv("~/Documents/Ecology /USDA Grant/Density plot for pheno and insect/Tree Flowering Phenology - TreePhenophase.csv", stringsAsFactors = FALSE)
-df2 <- read.csv("~/Documents/Ecology /USDA Grant/Density plot for pheno and insect/ALL tree database - Tree_Master_Updated Earthdance_COLA_Carondelet.csv", stringsAsFactors = FALSE)
+df1 <- read.csv("Tree Flowering Phenology - TreePhenophase.csv", stringsAsFactors = FALSE)
+df2 <- read.csv("ALL tree database - Tree_Master_Updated Earthdance_COLA_Carondelet.csv", stringsAsFactors = FALSE)
 
 # Rename columns for consistency
 df2 <- df2 %>% rename(c(Site = Orchard, TreeNumber = Tree))
