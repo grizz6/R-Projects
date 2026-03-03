@@ -7,11 +7,11 @@ library(readr)
 library(lmerTest)
 
 # Load the csv files
-ws2022 <- read_csv("~/Documents/Ecology /USDA Grant/weather data/Weather Regression/Weather Database - 2022.csv")
-ws2023 <- read_csv("~/Documents/Ecology /USDA Grant/weather data/Weather Regression/Weather Database - 2023.csv")
-ws2024 <- read_csv("~/Documents/Ecology /USDA Grant/weather data/Weather Regression/Weather Database - 2024.csv")
-weather_reg <- read_csv("~/Documents/Ecology /USDA Grant/weather data/Weather Regression/weather_regression_results.csv")
-gis_data <- read_csv("~/Documents/Ecology /USDA Grant/weather data/Weather Regression/Orchards_GISdata_October_2023 (USE THIS with PC1) - Site information.csv")
+ws2022 <- read_csv("Weather Database - 2022.csv")
+ws2023 <- read_csv("Weather Database - 2023.csv")
+ws2024 <- read_csv("Weather Database - 2024.csv")
+weather_reg <- read_csv("weather_regression_results.csv")
+gis_data <- read_csv("Orchards_GISdata_October_2023 (USE THIS with PC1) - Site information.csv")
 
 # Merge the weatherstation data from 2022, 2023, 2024
 ws_data <- bind_rows(ws2022, ws2023, ws2024)
