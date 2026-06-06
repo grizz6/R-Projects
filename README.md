@@ -2,6 +2,7 @@ R Projects
 A collection of ecological data visualization scripts written in R, focused on plant phenology and insect activity analysis. Projects explore seasonal timing patterns using density plots, ring/circular plots, and USDA data integrations.
 
 Repository Structure
+
 R-Projects/
 ├── Phenology Files/              # Core phenology data and analysis scripts
 ├── Density plot for pheno and insect/   # Density visualizations for phenology & insect data
