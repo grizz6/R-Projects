@@ -4,9 +4,13 @@ A collection of ecological data visualization scripts written in R, focused on p
 Repository Structure
 
 R-Projects/
+
 ├── Phenology Files/              # Core phenology data and analysis scripts
+
 ├── Density plot for pheno and insect/   # Density visualizations for phenology & insect data
+
 ├── Pheno and Insect Ring plot/   # Circular/ring plots showing seasonal patterns
+
 └── USDA/                         # USDA dataset integration and analysis
 
 Projects
