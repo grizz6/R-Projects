@@ -5,13 +5,14 @@ library(lubridate)
 library(pollen) # For GDD calculation
 library(readr)
 library(lmerTest)
+library(ggplot2)
 
 # Load the csv files
-ws2022 <- read_csv("Weather Database - 2022.csv")
-ws2023 <- read_csv("Weather Database - 2023.csv")
-ws2024 <- read_csv("Weather Database - 2024.csv")
-weather_reg <- read_csv("weather_regression_results.csv")
-gis_data <- read_csv("Orchards_GISdata_October_2023 (USE THIS with PC1) - Site information.csv")
+ws2022 <- read_csv("~/Documents/Ecology /USDA Grant/weather data/Weather Regression/Weather Database - 2022.csv")
+ws2023 <- read_csv("~/Documents/Ecology /USDA Grant/weather data/Weather Regression/Weather Database - 2023.csv")
+ws2024 <- read_csv("~/Documents/Ecology /USDA Grant/weather data/Weather Regression/Weather Database - 2024.csv")
+weather_reg <- read_csv("~/Documents/Ecology /USDA Grant/weather data/Weather Regression/weather_regression_results.csv")
+gis_data <- read_csv("~/Documents/Ecology /USDA Grant/weather data/Weather Regression/Orchards_GISdata_October_2023 (USE THIS with PC1) - Site information.csv")
 
 # Merge the weatherstation data from 2022, 2023, 2024
 ws_data <- bind_rows(ws2022, ws2023, ws2024)
@@ -93,6 +94,89 @@ gis_data <- gis_data %>%
 climate_gis <- climate_summary %>%
   left_join(gis_data, by=c("Location"))
 
+# Figure 1 - Growing Degree Hours vs Urbanization
+
+library(ggplot2)
+
+gdh_plot_data <- climate_gis %>%
+  filter(
+    !is.na(GDH50),
+    !is.na(`PC1 500m`)
+  )
+
+gdh_plot <- ggplot(
+  gdh_plot_data,
+  aes(
+    x = `PC1 500m`,
+    y = GDH50
+  )
+) +
+  geom_point(
+    size = 3,
+    alpha = 0.8,
+    color = "steelblue"
+  ) +
+  geom_smooth(
+    method = "lm",
+    se = TRUE,
+    color = "firebrick",
+    linewidth = 1
+  ) +
+  labs(
+    title = "Growing Degree Hours by Urbanization",
+    x = "Urbanization (PC1, 500 m)",
+    y = "Growing Degree Hours (GDH50)"
+  ) +
+  theme_classic(base_size = 14)
+
+print(gdh_plot)
+
+ggsave(
+  "GDH_vs_PC1.png",
+  gdh_plot,
+  width = 8,
+  height = 6,
+  dpi = 300
+)
+
+
+# Figure 2 - Growing Degree Days vs Urbanization
+
+gdd_plot_data <- climate_gis %>%
+  filter(
+    !is.na(GDD50),
+    !is.na(`PC1 500m`)
+  )
+
+gdd_plot <- ggplot(
+  gdd_plot_data,
+  aes(
+    x = `PC1 500m`,
+    y = GDD50
+  )
+) +
+  geom_point(
+    size = 3,
+    alpha = 0.8,
+    color = "steelblue"
+  ) +
+  labs(
+    title = "Growing Degree Days by Urbanization",
+    x = "Urbanization (PC1, 500 m)",
+    y = "Growing Degree Days (GDD50)"
+  ) +
+  theme_classic(base_size = 14)
+
+print(gdd_plot)
+
+ggsave(
+  "GDD_vs_PC1.png",
+  gdd_plot,
+  width = 8,
+  height = 6,
+  dpi = 300
+)
+
 # Run mixed-effects regression: GDH50 ~ PC1_500m + (1|YEAR)
 model_gdh <- lmer(GDH50 ~ `PC1 500m` + (1|YEAR), data = climate_gis)
 summary(model_gdh)
@@ -100,7 +184,6 @@ summary(model_gdh)
 # Same for GDD50
 model_gdd <- lmer(GDD50 ~ `PC1 500m` + (1|YEAR), data = climate_gis)
 summary(model_gdd)
-
 
 
 # write the methods in my own words
