@@ -1,31 +1,36 @@
 # R Projects
 
-A collection of ecological data visualization scripts written in R, focused on plant phenology and insect activity analysis. Projects explore seasonal timing patterns using density plots, ring/circular plots, and USDA data integrations.
+A collection of ecological data-analysis scripts written in R, built for a USDA-funded urban orchard pollination study. The work spans plant phenology (flowering/leaf timing), pollinator activity, and local weather, and turns years of raw field-observation CSVs into cleaned datasets, statistical models, and publication-style plots.
 
 ---
 
-## Repository Structure
+## Repository structure
 
 ```
 R-Projects/
-├── Phenology Files/                   # Core phenology data and analysis scripts
-├── Density plot for pheno and insect/ # Density visualizations for phenology & insect data
-├── Pheno and Insect Ring plot/        # Circular/ring plots showing seasonal patterns
-└── USDA/                              # USDA dataset integration and analysis
+├── Phenology Files/                   # Core phenology + insect dataframe building & modeling
+├── Density plot for pheno and insect/ # Kernel density visualizations
+├── Pheno and Insect Ring plot/        # Circular/ring seasonal plots
+└── USDA/                              # Weather regression + USDA-linked ring/density plots
 ```
 
----
+## How it's done
 
-## Projects
+Every script follows the same basic shape:
 
-### Phenology Files
-Scripts and data for analyzing plant phenology — the timing of seasonal biological events such as flowering, budding, and leaf emergence. Provides the foundational datasets and processing logic used across the other modules.
+1. **Ingest** one or more raw CSVs with `read.csv()` / `read_csv()` (tidyverse), one per field season/year.
+2. **Clean & standardize** — parse inconsistent date/time strings with `lubridate::parse_date_time()`, rename messy site/species names to canonical labels with `dplyr::case_when()`, unit-convert (°C→°F, m/s→mph) and drop irrelevant columns.
+3. **Reshape** — `merge()`/`dplyr::bind_rows()` across years and data sources (e.g. joining a tree phenology table to an insect-pollinator table by orchard + tree number), and pivot wide weather sheets into long format for plotting.
+4. **Model / summarize** — group-by aggregation (`dplyr::group_by` + `summarise`), correlation checks, and for the weather data, linear regression (`lm`) relating weather variables to phenology timing.
+5. **Visualize** — `ggplot2` (plus `ggridges`, `gridExtra`, `grid`) to produce histograms, boxplots, kernel density plots, and polar/ring plots of seasonal activity.
 
-### Density Plot for Pheno and Insect
-Generates kernel density plots to visualize the distribution of phenological events and insect activity across the calendar year. Useful for comparing the overlap (or mismatch) between plant and insect seasonal windows.
+## Code & libraries used
 
-### Pheno and Insect Ring Plot
-Creates circular (ring/polar) plots that display phenology and insect occurrence data across the 365-day year. The radial format makes seasonal patterns and peak activity periods easy to compare at a glance.
+`ggplot2`, `dplyr`, `tidyr`, `readr`, `lubridate`, `ggridges`, `gridExtra`, `grid`, `forecast`, `class`, `caret`, `corrplot`, `purrr`, `broom`.
 
-### USDA
-Analysis scripts that incorporate USDA datasets. Supports broader ecological context by connecting local phenology observations to national-scale agricultural and environmental data sources.
+## The algorithms
+
+- **Kernel density estimation** (via `ggplot2::geom_density` / density plot scripts) — estimates a smooth probability density of *when in the year* an event (flowering, insect sighting) happens, so two distributions (e.g. plant bloom timing vs. insect activity) can be visually compared for overlap.
+- **Ordinary least squares regression** (`lm()` in `USDA/weather regression.R`) — fits weather variables (temperature, wind speed, humidity, pressure) as predictors of phenological/weather outcomes, after unit-harmonizing every input source to a common scale.
+- **Categorical recoding / rule-based classification** (`case_when()` chains) — collapses noisy raw taxonomic labels (e.g. many spellings of an orchard name, or an insect order like "Diptera") into a small set of canonical categories (`BeeType`, standardized `Orchard`) before any modeling happens.
+- **Ring/polar plotting** — dates are mapped onto a 365-day circular axis so seasonal peaks in phenology and insect activity can be compared at a glance, independent of calendar year.
